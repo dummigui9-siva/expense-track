@@ -122,6 +122,14 @@ th {
 <label>User Name</label>
 <input type="text" id="username" placeholder="Enter your name">
 
+<label>Currency</label>
+<select id="currency" onchange="saveCurrency()">
+    <option value="₹">INR (₹)</option>
+    <option value="$">USD ($)</option>
+    <option value="€">EUR (€)</option>
+    <option value="£">GBP (£)</option>
+</select>
+
 <label>Amount</label>
 <input type="number" id="amount">
 
@@ -186,6 +194,13 @@ function toggleDarkMode(){
     );
 }
 
+/* ---------- Currency ---------- */
+currency.value = localStorage.getItem("currency") || "₹";
+function saveCurrency(){
+    localStorage.setItem("currency", currency.value);
+    applyFilters();
+}
+
 /* ---------- Username ---------- */
 username.value = localStorage.getItem("username") || "";
 username.oninput = () =>
@@ -230,7 +245,8 @@ function applyFilters(){
 }
 
 function display(list){
-    total.innerText = "Total: ₹" +
+    let symbol = currency.value;
+    total.innerText = "Total: " + symbol +
         list.reduce((s,e)=>s+Number(e.amount),0);
 
     summaryBody.innerHTML = "";
@@ -240,7 +256,7 @@ function display(list){
         tr.innerHTML = `
             <td>${e.date}</td>
             <td>${e.category}</td>
-            <td>${e.amount}</td>
+            <td>${symbol}${e.amount}</td>
             <td>
                 <button class="edit-btn" onclick="editExpense(${e.id})">Edit</button>
                 <button class="delete-btn" onclick="deleteExpense(${e.id})">X</button>
@@ -249,7 +265,7 @@ function display(list){
     });
 }
 
-/* ---------- Edit UX retained ---------- */
+/* ---------- Edit UX ---------- */
 function editExpense(id){
     window.scrollTo({ top:0, behavior:"smooth" });
     let e = expenses.find(x=>x.id===id);
