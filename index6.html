@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Expense Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2d89ef">
+
+<style>
+:root {
+    --bg:#ffffff;
+    --text:#000;
+    --card:#ffffff;
+    --primary:#2d89ef;
+}
+body.dark {
+    --bg:#121212;
+    --text:#e0e0e0;
+    --card:#1e1e1e;
+}
+
+* { box-sizing:border-box; }
+
+body {
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.container {
+    max-width:520px;
+    margin:20px auto;
+    background:var(--card);
+    padding:18px;
+    border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+h1 { text-align:center; }
+
+/* INPUTS */
+label {
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+input, select {
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    font-size:16px;
+    border-radius:14px;
+    border:1px solid #ccc;
+}
+
+/* BUTTONS (default full-width buttons remain) */
+button {
+    padding:12px 18px;
+    margin-top:10px;
+    font-size:16px;
+    border:none;
+    border-radius:999px;
+    background:var(--primary);
+    color:white;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    box-shadow:
+        inset 0 -2px 4px rgba(0,0,0,0.2),
+        0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* Floating effect */
+button:hover {
+    transform:translateY(-2px);
+    box-shadow:
+        inset 0 -1px 2px rgba(0,0,0,0.15),
+        0 8px 14px rgba(0,0,0,0.25);
+}
+
+/* FULL-WIDTH ACTION BUTTONS */
+.full-btn {
+    width:100%;
+}
+
+/* TOGGLE BUTTON GROUP (NEW FIX) */
+.toggle-bar {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.toggle-btn {
+    background:#555;
+    padding:8px 16px;
+    font-size:14px;
+}
+
+/* BUTTON ROW */
+.button-row {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+.button-row button {
+    flex:1;
+}
+
+/* SPECIAL BUTTONS */
+.edit-btn { background:orange; }
+.delete-btn { background:black; }
+
+/* TABLE */
+table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:14px;
+}
+th, td {
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+th {
+    background:var(--primary);
+    color:white;
+}
+
+/* CATEGORY COLORS */
+.Food { background:#ff6b6b; }
+.Travel { background:#4ecdc4; }
+.Shopping { background:#ffd93d; color:black; }
+.Other { background:#6a4c93; color:white; }
+
+/* LEGEND */
+.legend {
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+    justify-content:center;
+}
+.legend span {
+    padding:6px 14px;
+    border-radius:999px;
+    font-weight:bold;
+}
+
+/* MOBILE */
+@media(max-width:480px){
+    h1 { font-size:22px; }
+    input,select,button { font-size:15px; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Expense Tracker</h1>
+
+<!-- 🔹 COMPACT TOGGLE BAR -->
+<div class="toggle-bar">
+    <button class="toggle-btn" onclick="toggleDarkMode()">Dark Mode</button>
+    <button class="toggle-btn" onclick="toggleLegend()">Legend</button>
+</div>
+
+<div id="legendBox" class="legend">
+    <span class="Food">Food</span>
+    <span class="Travel">Travel</span>
+    <span class="Shopping">Shopping</span>
+    <span class="Other">Other</span>
+</div>
+
+<label>Select Currency</label>
+<select id="currencySelect" onchange="changeCurrency()">
+    <option value="INR">India (₹)</option>
+    <option value="USD">USA ($)</option>
+    <option value="GBP">UK (£)</option>
+    <option value="EUR">Europe (€)</option>
+    <option value="CNY">China (¥)</option>
+    <option value="JPY">Japan (¥)</option>
+    <option value="AED">UAE (د.إ)</option>
+</select>
+
+<label>Amount</label>
+<input type="number" id="amount">
+
+<label>Category</label>
+<select id="category">
+    <option value="">Select</option>
+    <option>Food</option>
+    <option>Travel</option>
+    <option>Shopping</option>
+    <option>Other</option>
+</select>
+
+<label>Date</label>
+<input type="date" id="date">
+
+<button id="addBtn" class="full-btn" onclick="addExpense()">Add Expense</button>
+
+<h3 id="total">Total: ₹0</h3>
+
+<div class="button-row">
+    <button onclick="setDateFilter('daily')">Daily</button>
+    <button onclick="setDateFilter('weekly')">Weekly</button>
+    <button onclick="setDateFilter('monthly')">Monthly</button>
+    <button onclick="setDateFilter('all')">All</button>
+</div>
+
+<label>Filter by Category</label>
+<select id="categoryFilter" onchange="applyFilters()">
+    <option value="All">All</option>
+    <option>Food</option>
+    <option>Travel</option>
+    <option>Shopping</option>
+    <option>Other</option>
+</select>
+
+<button class="full-btn" onclick="exportCSV()">Export CSV</button>
+
+<canvas id="chart" height="180"></canvas>
+
+<table>
+<thead>
+<tr>
+    <th>Date</th>
+    <th>Category</th>
+    <th>Amount</th>
+    <th>Actions</th>
+</tr>
+</thead>
+<tbody id="summaryBody"></tbody>
+</table>
+
+</div>
+
+<script>
+/* ---------- PWA ---------- */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+}
+
+/* ---------- Dark Mode ---------- */
+if(localStorage.getItem("dark")==="true")
+    document.body.classList.add("dark");
+
+function toggleDarkMode(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("dark",document.body.classList.contains("dark"));
+}
+
+/* ---------- Legend ---------- */
+function toggleLegend(){
+    legendBox.style.display =
+        legendBox.style.display==="none" ? "flex" : "none";
+}
+
+/* ---------- Currency ---------- */
+const currencyMap={INR:"₹",USD:"$",GBP:"£",EUR:"€",CNY:"¥",JPY:"¥",AED:"د.إ"};
+let selectedCurrency=localStorage.getItem("currency")||"INR";
+currencySelect.value=selectedCurrency;
+
+function changeCurrency(){
+    selectedCurrency=currencySelect.value;
+    localStorage.setItem("currency",selectedCurrency);
+    applyFilters();
+}
+const fmt=a=>currencyMap[selectedCurrency]+a;
+
+/* ---------- CORE LOGIC (UNCHANGED) ---------- */
+let expenses=JSON.parse(localStorage.getItem("expenses"))||[];
+let editId=null;
+let currentDateFilter="all";
+
+applyFilters();
+
+function addExpense(){
+    if(!amount.value||!category.value||!date.value){
+        alert("Fill all fields"); return;
+    }
+    if(editId){
+        expenses=expenses.map(e=>e.id===editId?{...e,amount:amount.value,category:category.value,date:date.value}:e);
+        editId=null; addBtn.innerText="Add Expense";
+    } else {
+        expenses.push({id:Date.now(),amount:amount.value,category:category.value,date:date.value});
+    }
+    localStorage.setItem("expenses",JSON.stringify(expenses));
+    amount.value=category.value=date.value="";
+    applyFilters();
+}
+
+function setDateFilter(t){currentDateFilter=t;applyFilters();}
+
+function applyFilters(){
+    let list=[...expenses];
+    let today=new Date();
+    if(currentDateFilter==="monthly")
+        list=list.filter(e=>new Date(e.date).getMonth()===today.getMonth());
+    let c=categoryFilter.value;
+    if(c!=="All") list=list.filter(e=>e.category===c);
+    display(list);
+}
+
+function display(list){
+    total.innerText="Total: "+fmt(list.reduce((s,e)=>s+Number(e.amount),0));
+    summaryBody.innerHTML="";
+    list.forEach(e=>{
+        let tr=document.createElement("tr");
+        tr.className=e.category;
+        tr.innerHTML=`
+        <td>${e.date}</td>
+        <td>${e.category}</td>
+        <td>${fmt(e.amount)}</td>
+        <td>
+            <button class="edit-btn" onclick="editExpense(${e.id})">Edit</button>
+            <button class="delete-btn" onclick="deleteExpense(${e.id})">X</button>
+        </td>`;
+        summaryBody.appendChild(tr);
+    });
+    drawChart(list);
+}
+
+function editExpense(id){
+    let e=expenses.find(x=>x.id===id);
+    amount.value=e.amount; category.value=e.category; date.value=e.date;
+    editId=id; addBtn.innerText="Update Expense";
+}
+function deleteExpense(id){
+    expenses=expenses.filter(e=>e.id!==id);
+    localStorage.setItem("expenses",JSON.stringify(expenses));
+    applyFilters();
+}
+
+/* ---------- Export ---------- */
+function exportCSV(){
+    let rows=["Date,Category,Amount"];
+    expenses.forEach(e=>rows.push(`${e.date},${e.category},${e.amount}`));
+    let blob=new Blob([rows.join("\n")],{type:"text/csv"});
+    let a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="expenses.csv";
+    a.click();
+}
+
+/* ---------- Chart ---------- */
+function drawChart(list){
+    let ctx=chart.getContext("2d");
+    ctx.clearRect(0,0,chart.width,chart.height);
+    let sums={};
+    list.forEach(e=>sums[e.category]=(sums[e.category]||0)+Number(e.amount));
+    let keys=Object.keys(sums);
+    let max=Math.max(...Object.values(sums),1);
+    keys.forEach((k,i)=>{
+        let h=(sums[k]/max)*120;
+        ctx.fillStyle=getComputedStyle(document.querySelector("."+k)).backgroundColor;
+        ctx.fillRect(30+i*70,150-h,40,h);
+        ctx.fillStyle="#000";
+        ctx.fillText(k,30+i*70,165);
+    });
+}
+</script>
+</body>
+</html>
