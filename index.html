@@ -7,298 +7,409 @@
 
 <style>
 :root {
-    --bg:#ffffff;
-    --text:#000;
+    --bg:#f4f6fb;
     --card:#ffffff;
-    --primary:#2d89ef;
+    --form:#eeeeee;
+    --text:#1a1a1a;
+    --primary:#6c63ff;
+
+    --shadow-light:rgba(255,255,255,0.75);
+    --shadow-dark:rgba(0,0,0,0.15);
+
+    --food:#f3a6a6;
+    --travel:#9fd6cf;
+    --shopping:#f2e6a0;
+    --other:#b7a6cc;
 }
+
 body.dark {
     --bg:#121212;
-    --text:#e0e0e0;
     --card:#1e1e1e;
+    --form:#2a2a2a;
+    --text:#e6e6e6;
+
+    --shadow-light:rgba(255,255,255,0.06);
+    --shadow-dark:rgba(0,0,0,0.7);
+
+    --food:#c98a8a;
+    --travel:#7fbdb7;
+    --shopping:#cfc58a;
+    --other:#9a8bb3;
 }
+
 * { box-sizing:border-box; }
+
+/* 🌿 Olive premium outer background */
 body {
     margin:0;
-    font-family:Arial, sans-serif;
-    background:var(--bg);
+    font-family:"Segoe UI", Roboto, Arial, sans-serif;
+    background:#8a8f6a; /* Apple / Samsung olive tone */
     color:var(--text);
 }
+
 .container {
-    max-width:520px;
+    max-width:420px;
     margin:20px auto;
-    background:var(--card);
-    padding:18px;
-    border-radius:14px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    padding:16px;
 }
-h1 { text-align:center; }
+
+/* ---------- HEADER ---------- */
+.header {
+    background:linear-gradient(135deg,var(--primary),#857dff);
+    color:#fff;
+    padding:20px;
+    border-radius:22px;
+    box-shadow:0 12px 26px rgba(0,0,0,0.3);
+    margin-bottom:18px;
+    text-align:center;
+}
+
+.header h1 {
+    margin:0;
+}
+
+/* ✨ Professional quote styling */
+.tagline {
+    margin-top:6px;
+    font-family:"Georgia","Times New Roman",serif;
+    font-style:italic;
+    font-size:14px;
+    opacity:0.95;
+}
+
+/* ---------- CARDS ---------- */
+.card {
+    background:var(--card);
+    border-radius:22px;
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:
+        10px 10px 22px var(--shadow-dark),
+       -10px -10px 22px var(--shadow-light);
+}
+
+.form-card {
+    background:var(--form);
+}
 
 label {
-    display:block;
+    font-size:13px;
+    font-weight:600;
     margin-top:12px;
-    font-weight:bold;
+    display:block;
 }
+
 input, select {
     width:100%;
-    padding:12px;
+    padding:12px 14px;
     margin-top:6px;
-    font-size:16px;
+    border:none;
     border-radius:14px;
-    border:1px solid #ccc;
+    background:var(--bg);
+    box-shadow:
+        inset 4px 4px 8px var(--shadow-dark),
+        inset -4px -4px 8px var(--shadow-light);
+    font-size:15px;
+    color:var(--text);
 }
+
+/* ---------- PRIMARY BUTTONS ---------- */
 button {
-    padding:12px 18px;
-    margin-top:10px;
-    font-size:16px;
     border:none;
     border-radius:999px;
+    padding:12px 18px;
     background:var(--primary);
     color:white;
+    font-size:15px;
     cursor:pointer;
-    transition:all 0.2s ease;
     box-shadow:
-        inset 0 -2px 4px rgba(0,0,0,0.2),
-        0 4px 6px rgba(0,0,0,0.2);
+        inset 0 -4px 6px rgba(0,0,0,0.35),
+        6px 6px 14px rgba(0,0,0,0.25);
+    transition:box-shadow 0.15s ease;
 }
+
 button:hover {
-    transform:translateY(-2px);
     box-shadow:
-        inset 0 -1px 2px rgba(0,0,0,0.15),
-        0 8px 14px rgba(0,0,0,0.25);
+        inset 0 4px 6px rgba(255,255,255,0.25),
+        3px 3px 8px rgba(0,0,0,0.3);
 }
-.full-btn { width:100%; }
 
-.edit-btn { background:orange; }
-.delete-btn { background:black; }
+.full-btn { width:100%; margin-top:14px; }
 
+.total-box {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:700;
+    font-size:18px;
+}
+
+/* ---------- LEGEND ---------- */
+.legend {
+    display:flex;
+    justify-content:space-between;
+}
+
+.legend span {
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.Food { background:var(--food); }
+.Travel { background:var(--travel); }
+.Shopping { background:var(--shopping); }
+.Other { background:var(--other); }
+
+/* ---------- TABLE ---------- */
 table {
     width:100%;
     border-collapse:collapse;
     margin-top:14px;
 }
-th, td {
-    border:1px solid #ccc;
-    padding:8px;
-    text-align:center;
-}
-th {
+
+thead th {
     background:var(--primary);
     color:white;
+    padding:8px;
+    font-size:13px;
 }
 
-/* Category colors */
-.Food { background:#ff6b6b; }
-.Travel { background:#4ecdc4; }
-.Shopping { background:#ffd93d; color:black; }
-.Other { background:#6a4c93; color:white; }
-
-/* Legend */
-.legend {
-    display:flex;
-    justify-content:space-around;
-    margin:14px 0;
-}
-.legend span {
-    padding:6px 12px;
-    border-radius:999px;
+tbody td {
+    padding:8px;
     font-size:14px;
-    color:white;
+    text-align:center;
+    border-bottom:1px solid rgba(0,0,0,0.1);
 }
-.legend .Food { background:#ff6b6b; }
-.legend .Travel { background:#4ecdc4; }
-.legend .Shopping { background:#ffd93d; color:black; }
-.legend .Other { background:#6a4c93; }
+
+body.dark tbody td {
+    font-weight:600;
+}
+
+/* ---------- ACTION BUTTONS ---------- */
+.action-btn {
+    padding:6px 12px;
+    font-size:13px;
+    border-radius:10px;
+    background:var(--bg);
+    box-shadow:
+        inset 2px 2px 4px var(--shadow-dark),
+        inset -2px -2px 4px var(--shadow-light),
+        4px 4px 8px var(--shadow-dark);
+    margin:4px;
+    min-width:64px;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    transition:box-shadow 0.12s ease;
+    transform:none !important;
+}
+
+.action-btn:hover {
+    box-shadow:
+        inset 4px 4px 6px var(--shadow-dark),
+        inset -4px -4px 6px var(--shadow-light);
+}
+
+.edit-btn { color:#d98200; }
+.delete-btn { color:#b00020; }
+
+/* ---------- FOOTER ---------- */
+.footer {
+    margin-top:24px;
+    padding:14px 10px;
+    text-align:center;
+    font-size:12px;
+    opacity:0.75;
+    line-height:1.6;
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h1>Expense Tracker</h1>
+<div class="header">
+    <h1>Expense Tracker</h1>
+    <div class="tagline">“Track smarter. Spend wiser.”</div>
+</div>
 
-<button class="full-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+<div class="card">
+    <button class="full-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+</div>
 
-<label>User Name</label>
-<input type="text" id="username" placeholder="Enter your name">
+<div class="card form-card">
+    <label>User Name</label>
+    <input type="text" id="username">
 
-<label>Currency</label>
-<select id="currency" onchange="saveCurrency()">
-    <option value="₹">INR (₹)</option>
-    <option value="$">USD ($)</option>
-    <option value="€">EUR (€)</option>
-    <option value="£">GBP (£)</option>
-</select>
+    <label>Currency</label>
+    <select id="currency" onchange="saveCurrency()">
+        <option value="₹">INR (₹)</option>
+        <option value="$">USD ($)</option>
+        <option value="€">EUR (€)</option>
+        <option value="£">GBP (£)</option>
+    </select>
 
-<label>Amount</label>
-<input type="number" id="amount">
+    <label>Amount</label>
+    <input type="number" id="amount">
 
-<label>Category</label>
-<select id="category">
-    <option value="">Select</option>
-    <option>Food</option>
-    <option>Travel</option>
-    <option>Shopping</option>
-    <option>Other</option>
-</select>
+    <label>Category</label>
+    <select id="category">
+        <option value="">Select</option>
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Shopping</option>
+        <option>Other</option>
+    </select>
 
-<label>Date</label>
-<input type="date" id="date">
+    <label>Date</label>
+    <input type="date" id="date">
 
-<button id="addBtn" class="full-btn" onclick="addExpense()">Add Expense</button>
+    <button id="addBtn" class="full-btn" onclick="addExpense()">Add Expense</button>
+</div>
 
-<h3 id="total">Total: ₹0</h3>
+<div class="card total-box">
+    <span id="total">Total: ₹0</span>
+</div>
 
-<div class="legend">
+<div class="card legend">
     <span class="Food">Food</span>
     <span class="Travel">Travel</span>
     <span class="Shopping">Shopping</span>
     <span class="Other">Other</span>
 </div>
 
-<label>Filter by Category</label>
-<select id="categoryFilter" onchange="applyFilters()">
-    <option value="All">All</option>
-    <option>Food</option>
-    <option>Travel</option>
-    <option>Shopping</option>
-    <option>Other</option>
-</select>
+<div class="card">
+    <label>Filter by Category</label>
+    <select id="categoryFilter" onchange="applyFilters()">
+        <option value="All">All</option>
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Shopping</option>
+        <option>Other</option>
+    </select>
 
-<button class="full-btn" onclick="exportCSV()">Export CSV</button>
+    <button class="full-btn" onclick="exportCSV()">Export CSV</button>
 
-<table>
-<thead>
-<tr>
-    <th>Date</th>
-    <th>Category</th>
-    <th>Amount</th>
-    <th>Actions</th>
-</tr>
-</thead>
-<tbody id="summaryBody"></tbody>
-</table>
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="summaryBody"></tbody>
+    </table>
+</div>
+
+<div class="footer">
+    © siva80mail@gmail.com 2025–2026<br>
+    Disclaimer: Best viewed in web browsers like Google Chrome, Microsoft Edge
+</div>
 
 </div>
 
 <script>
-/* ---------- Dark Mode ---------- */
-if(localStorage.getItem("darkMode")==="on"){
+/* LOGIC UNCHANGED */
+if(localStorage.getItem("darkMode")==="on")
     document.body.classList.add("dark");
-}
+
 function toggleDarkMode(){
     document.body.classList.toggle("dark");
-    localStorage.setItem(
-        "darkMode",
-        document.body.classList.contains("dark") ? "on" : "off"
-    );
+    localStorage.setItem("darkMode",
+        document.body.classList.contains("dark")?"on":"off");
 }
 
-/* ---------- Currency ---------- */
 currency.value = localStorage.getItem("currency") || "₹";
 function saveCurrency(){
-    localStorage.setItem("currency", currency.value);
+    localStorage.setItem("currency",currency.value);
     applyFilters();
 }
 
-/* ---------- Username ---------- */
 username.value = localStorage.getItem("username") || "";
-username.oninput = () =>
-    localStorage.setItem("username", username.value);
+username.oninput=()=>localStorage.setItem("username",username.value);
 
-/* ---------- Core Data ---------- */
-let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-let editId = null;
+let expenses = JSON.parse(localStorage.getItem("expenses"))||[];
+let editId=null;
 
 applyFilters();
 
 function addExpense(){
-    if(!amount.value || !category.value || !date.value){
-        alert("Fill all fields"); return;
+    if(!amount.value||!category.value||!date.value){
+        alert("Fill all fields");return;
     }
     if(editId){
-        expenses = expenses.map(e =>
-            e.id === editId
-                ? {...e, amount:amount.value, category:category.value, date:date.value}
-                : e
-        );
-        editId = null;
-        addBtn.innerText = "Add Expense";
+        expenses=expenses.map(e=>e.id===editId?
+            {...e,amount:amount.value,category:category.value,date:date.value}:e);
+        editId=null;
+        addBtn.innerText="Add Expense";
     } else {
-        expenses.push({
-            id: Date.now(),
-            amount: amount.value,
-            category: category.value,
-            date: date.value
-        });
+        expenses.push({id:Date.now(),amount:amount.value,category:category.value,date:date.value});
     }
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-    amount.value = category.value = date.value = "";
+    localStorage.setItem("expenses",JSON.stringify(expenses));
+    amount.value=category.value=date.value="";
     applyFilters();
 }
 
 function applyFilters(){
-    let list = [...expenses];
-    let c = categoryFilter.value;
-    if(c !== "All") list = list.filter(e => e.category === c);
+    let list=[...expenses];
+    let c=categoryFilter.value;
+    if(c!=="All") list=list.filter(e=>e.category===c);
     display(list);
 }
 
 function display(list){
-    let symbol = currency.value;
-    total.innerText = "Total: " + symbol +
+    let sym=currency.value;
+    total.innerText="Total: "+sym+
         list.reduce((s,e)=>s+Number(e.amount),0);
-
-    summaryBody.innerHTML = "";
+    summaryBody.innerHTML="";
     list.forEach(e=>{
-        let tr = document.createElement("tr");
-        tr.className = e.category;
-        tr.innerHTML = `
-            <td>${e.date}</td>
-            <td>${e.category}</td>
-            <td>${symbol}${e.amount}</td>
-            <td>
-                <button class="edit-btn" onclick="editExpense(${e.id})">Edit</button>
-                <button class="delete-btn" onclick="deleteExpense(${e.id})">X</button>
-            </td>`;
+        let tr=document.createElement("tr");
+        tr.className=e.category;
+        tr.innerHTML=`
+        <td>${e.date}</td>
+        <td>${e.category}</td>
+        <td>${sym}${e.amount}</td>
+        <td>
+            <button class="action-btn edit-btn" onclick="editExpense(${e.id})">Edit</button>
+            <button class="action-btn delete-btn" onclick="deleteExpense(${e.id})">Delete</button>
+        </td>`;
         summaryBody.appendChild(tr);
     });
 }
 
-/* ---------- Edit UX ---------- */
 function editExpense(id){
-    window.scrollTo({ top:0, behavior:"smooth" });
-    let e = expenses.find(x=>x.id===id);
-    amount.value = e.amount;
-    category.value = e.category;
-    date.value = e.date;
-    setTimeout(()=>category.focus(),300);
-    editId = id;
-    addBtn.innerText = "Update Expense";
+    window.scrollTo({top:0,behavior:"smooth"});
+    let e=expenses.find(x=>x.id===id);
+    amount.value=e.amount;
+    category.value=e.category;
+    date.value=e.date;
+    editId=id;
+    addBtn.innerText="Update Expense";
 }
 
 function deleteExpense(id){
-    expenses = expenses.filter(e=>e.id!==id);
-    localStorage.setItem("expenses", JSON.stringify(expenses));
+    expenses=expenses.filter(e=>e.id!==id);
+    localStorage.setItem("expenses",JSON.stringify(expenses));
     applyFilters();
 }
 
-/* ---------- CSV Export ---------- */
 function exportCSV(){
-    let user = username.value || "User";
-    let lines = [];
-    lines.push("User Name," + user);
+    let user=username.value||"User";
+    let lines=[];
+    lines.push("User Name,"+user);
     lines.push("");
     lines.push("Date,Category,Amount");
-
     expenses.forEach(e=>{
         lines.push(`${e.date},${e.category},${e.amount}`);
     });
-
-    let blob = new Blob([lines.join("\n")], { type:"text/csv" });
-    let a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "Expense_Report.csv";
+    let blob=new Blob([lines.join("\n")],{type:"text/csv"});
+    let a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="Expense_Report.csv";
     a.click();
 }
 </script>
