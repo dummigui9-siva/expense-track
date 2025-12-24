@@ -233,7 +233,9 @@ body.dark tbody td {
 <!-- Header: One-screen calm finance layout -->
 <div class="header">
     <div class="header-content">
-        <div class="header-icon" aria-hidden="true">📊</div>
+        <div class="header-icon" aria-hidden="true">
+            <img src="moneymoneymoney.png" alt="" />
+        </div>
 
         <div class="header-text">
             <h1>Expense Tracker</h1>
@@ -257,11 +259,21 @@ body.dark tbody td {
     gap: 12px;
 }
 
-/* Icon styling */
+/* Icon wrapper */
 .header-icon {
-    font-size: 28px;
-    line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0.9;
+}
+
+/* Image styling */
+.header-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
 
 /* Text block */
@@ -462,4 +474,5 @@ function exportCSV(){
 </script>
 </body>
 </html>
+
 
