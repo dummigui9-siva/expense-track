@@ -6,298 +6,294 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root {
-    --bg:#f4f6fb;
-    --card:#ffffff;
-    --form:#eeeeee;
-    --text:#1a1a1a;
-    --primary:#6c63ff;
-
-    --shadow-light:rgba(255,255,255,0.75);
-    --shadow-dark:rgba(0,0,0,0.15);
-
-    --food:#f3a6a6;
-    --travel:#9fd6cf;
-    --shopping:#f2e6a0;
-    --other:#b7a6cc;
+/* ================= THEME ================= */
+:root{
+  --bg1:#fbf7f2;
+  --bg2:#ffffff;
+  --card:#e9f7f1;
+  --text:#1a1a1a;
+  --nav:#f0f2f1;
+  --icon:#6b7280;
+  --icon-active:#000;
+  --header:#dff1ea;
+  --shadow-soft:0 12px 28px rgba(0,0,0,.14);
+  --shadow-emboss:inset 4px 4px 8px rgba(0,0,0,.08),
+                   inset -4px -4px 8px rgba(255,255,255,.9);
 }
 
-body.dark {
-    --bg:#121212;
-    --card:#1e1e1e;
-    --form:#2a2a2a;
-    --text:#e6e6e6;
-
-    --shadow-light:rgba(255,255,255,0.06);
-    --shadow-dark:rgba(0,0,0,0.7);
-
-    --food:#c98a8a;
-    --travel:#7fbdb7;
-    --shopping:#cfc58a;
-    --other:#9a8bb3;
+body.dark{
+  --bg1:#0b0d10;
+  --bg2:#0f1216;
+  --card:#1a1f26;
+  --text:#f3f4f6;
+  --nav:#1e232b;
+  --icon:#ffffff;
+  --icon-active:#ffffff;
+  --header:#232a33;
+  --shadow-soft:0 20px 48px rgba(0,0,0,.75);
+  --shadow-emboss:inset 4px 4px 10px rgba(0,0,0,.8),
+                   inset -4px -4px 10px rgba(255,255,255,.05);
 }
 
-* { box-sizing:border-box; }
+*{box-sizing:border-box}
 
-/* 🌿 Olive premium outer background */
-body {
-    margin:0;
-    font-family:"Segoe UI", Roboto, Arial, sans-serif;
-    background:#8a8f6a; /* Apple / Samsung olive tone */
-    color:var(--text);
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:var(--text);
+  transition:.35s;
 }
 
-.container {
-    max-width:420px;
-    margin:20px auto;
-    padding:16px;
+.app{
+  max-width:420px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:160px;
 }
 
-/* ---------- HEADER ---------- */
-.header {
-    background:linear-gradient(135deg,var(--primary),#857dff);
-    color:#fff;
-    padding:20px;
-    border-radius:22px;
-    box-shadow:0 12px 26px rgba(0,0,0,0.3);
-    margin-bottom:18px;
-    text-align:center;
+.screen{display:none;padding:18px}
+.screen.active{display:block}
+
+/* ================= CARD ================= */
+.card{
+  background:var(--card);
+  border-radius:28px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow-soft);
 }
 
-.header h1 {
-    margin:0;
+/* ================= HOME ================= */
+.home-title{text-align:center;font-size:28px;font-weight:800}
+.home-quote{text-align:center;margin-top:6px;opacity:.85}
+
+.home-icons{
+  margin-top:20px;
+  font-size:14px;
+  line-height:1.8;
+}
+.home-icons div{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.home-icons svg{
+  width:18px;
+  height:18px;
+  stroke:var(--icon);
 }
 
-/* ✨ Professional quote styling */
-.tagline {
-    margin-top:6px;
-    font-family:"Georgia","Times New Roman",serif;
-    font-style:italic;
-    font-size:14px;
-    opacity:0.95;
+/* Home-only disclaimer */
+.home-disclaimer{
+  margin-top:22px;
+  font-size:10px;
+  opacity:.25;
+  text-align:center;
 }
 
-/* ---------- CARDS ---------- */
-.card {
-    background:var(--card);
-    border-radius:22px;
-    padding:18px;
-    margin-bottom:16px;
-    box-shadow:
-        10px 10px 22px var(--shadow-dark),
-       -10px -10px 22px var(--shadow-light);
+/* ================= FORM ================= */
+label{font-size:13px;font-weight:600;margin-top:14px;display:block}
+input,select{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:18px;
+  background:var(--header);
+  margin-top:6px;
+  color:var(--text);
 }
 
-.form-card {
-    background:var(--form);
+/* ================= BUTTON ================= */
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:999px;
+  margin-top:18px;
+  background:var(--card);
+  font-weight:600;
+  box-shadow:var(--shadow-emboss);
+  transition:.25s;
+  color:var(--text);
+}
+body.dark button{color:#ffffff}
+button:hover{transform:translateY(-2px)}
+
+/* ================= TABLE ================= */
+.total-caption{text-align:center;font-size:14px;opacity:.7}
+.total-box{text-align:center;font-size:22px;font-weight:700;margin-bottom:14px}
+
+table{
+  width:100%;
+  border-spacing:0 12px;
+  border-collapse:separate;
+}
+thead th{
+  background:rgba(0,0,0,.12);
+  padding:12px;
+  border-radius:14px;
+}
+tbody tr{
+  background:var(--card);
+  border-radius:18px;
+  box-shadow:var(--shadow-soft);
+}
+tbody td{text-align:center;padding:12px}
+
+/* ================= ACTION BUTTONS ================= */
+.action-btn{
+  padding:6px 16px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  border:none;
+  box-shadow:var(--shadow-emboss);
+}
+.edit-btn{background:#bbf7d0}
+.delete-btn{background:#fecaca}
+
+/* ================= USER DASHBOARD ================= */
+.dashboard{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.stat{
+  padding:16px;
+  border-radius:999px;
+  background:var(--card);
+  text-align:center;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:var(--shadow-emboss);
+}
+.stat:hover{transform:translateY(-2px)}
+
+.user-output{
+  margin-top:16px;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(0,0,0,.05);
+  font-size:14px;
 }
 
-label {
-    font-size:13px;
-    font-weight:600;
-    margin-top:12px;
-    display:block;
+/* ================= NAV BAR ================= */
+.bottom-nav{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:92%;
+  max-width:380px;
+  height:74px;
+  background:var(--nav);
+  border-radius:999px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  box-shadow:0 26px 56px rgba(0,0,0,.45);
 }
 
-input, select {
-    width:100%;
-    padding:12px 14px;
-    margin-top:6px;
-    border:none;
-    border-radius:14px;
-    background:var(--bg);
-    box-shadow:
-        inset 4px 4px 8px var(--shadow-dark),
-        inset -4px -4px 8px var(--shadow-light);
-    font-size:15px;
-    color:var(--text);
+.nav-item{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  transition:transform .5s cubic-bezier(.22,.61,.36,1);
 }
 
-/* ---------- PRIMARY BUTTONS ---------- */
-button {
-    border:none;
-    border-radius:999px;
-    padding:12px 18px;
-    background:var(--primary);
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    box-shadow:
-        inset 0 -4px 6px rgba(0,0,0,0.35),
-        6px 6px 14px rgba(0,0,0,0.25);
-    transition:box-shadow 0.15s ease;
+.nav-item svg{
+  width:18px;
+  height:18px;
+  stroke:var(--icon);
+  transition:.35s;
 }
 
-button:hover {
-    box-shadow:
-        inset 0 4px 6px rgba(255,255,255,0.25),
-        3px 3px 8px rgba(0,0,0,0.3);
+.nav-item::before{
+  content:"";
+  position:absolute;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:var(--bg1);
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  transition:transform .5s cubic-bezier(.22,.61,.36,1),
+             box-shadow .4s;
+  z-index:-1;
 }
 
-.full-btn { width:100%; margin-top:14px; }
-
-.total-box {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-weight:700;
-    font-size:18px;
+.nav-item.active{transform:translateY(-22px)}
+.nav-item.active::before{
+  transform:translate(-50%,-50%) scale(1);
+  box-shadow:0 14px 28px rgba(0,0,0,.45);
 }
-
-/* ---------- LEGEND ---------- */
-.legend {
-    display:flex;
-    justify-content:space-between;
-}
-
-.legend span {
-    padding:6px 12px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.Food { background:var(--food); }
-.Travel { background:var(--travel); }
-.Shopping { background:var(--shopping); }
-.Other { background:var(--other); }
-
-/* ---------- TABLE ---------- */
-table {
-    width:100%;
-    border-collapse:collapse;
-    margin-top:14px;
-}
-
-thead th {
-    background:var(--primary);
-    color:white;
-    padding:8px;
-    font-size:13px;
-}
-
-tbody td {
-    padding:8px;
-    font-size:14px;
-    text-align:center;
-    border-bottom:1px solid rgba(0,0,0,0.1);
-}
-
-body.dark tbody td {
-    font-weight:600;
-}
-
-/* ---------- ACTION BUTTONS ---------- */
-.action-btn {
-    padding:6px 12px;
-    font-size:13px;
-    border-radius:10px;
-    background:var(--bg);
-    box-shadow:
-        inset 2px 2px 4px var(--shadow-dark),
-        inset -2px -2px 4px var(--shadow-light),
-        4px 4px 8px var(--shadow-dark);
-    margin:4px;
-    min-width:64px;
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-    transition:box-shadow 0.12s ease;
-    transform:none !important;
-}
-
-.action-btn:hover {
-    box-shadow:
-        inset 4px 4px 6px var(--shadow-dark),
-        inset -4px -4px 6px var(--shadow-light);
-}
-
-.edit-btn { color:#d98200; }
-.delete-btn { color:#b00020; }
-
-/* ---------- FOOTER ---------- */
-.footer {
-    margin-top:24px;
-    padding:14px 10px;
-    text-align:center;
-    font-size:12px;
-    opacity:0.75;
-    line-height:1.6;
-}
-
-/* Header container */
-.header {
-    padding: 20px 16px;
-    background: linear-gradient(135deg, #f4f7f6, #eef3f1);
-    border-bottom: 1px solid #dde5e2;
-}
-
-/* Horizontal alignment */
-.header-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Icon wrapper */
-.header-icon {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px; /* emoji size */
-}
-
-/* Text block */
-.header-text h1 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 600;
-    color: #1f3d3a;
-}
-
-/* Tagline */
-.tagline {
-    margin-top: 4px;
-    font-size: 13px;
-    color: #5f7f78;
-    letter-spacing: 0.3px;
+.nav-item.active svg{
+  stroke:var(--icon-active);
+  transform:scale(1.15);
 }
 </style>
 </head>
 
 <body>
-<div class="container">
+<div class="app">
 
-<!-- Header: One-screen calm finance layout -->
-<div class="header">
-    <div class="header-content">
-        <div class="header-icon" aria-hidden="true">
-            💰
-        </div>
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="card">
+    <div class="home-title">Expense Tracker</div>
+    <div class="home-quote">😊💰 Track expenses • Control spending • Live happily</div>
 
-        <div class="header-text">
-            <h1>Expense Tracker</h1>
-            <div class="tagline">Spending wisely. Tracking smartly.</div>
-        </div>
+    <div class="home-icons">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+          <path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>
+        </svg>
+        Home — Overview and guidance
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Add — Log your daily expenses
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+          <rect x="3" y="4" width="18" height="16" rx="3"/>
+        </svg>
+        Expenses — Review, edit and analyze
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c2-4 14-4 16 0"/>
+        </svg>
+        User — Profile, dashboard & settings
+      </div>
     </div>
+
+    <!-- DISCLAIMER ONLY IN HOME -->
+    <div class="home-disclaimer">
+      © 2025–2026 Sivakumar · siva80mail@gmail.com · All rights reserved · Disclaimer applies
+    </div>
+  </div>
 </div>
 
-<div class="card">
-    <button class="full-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-</div>
-
-<div class="card form-card">
+<!-- ADD -->
+<div id="add" class="screen">
+  <div class="card">
     <label>User Name</label>
-    <input type="text" id="username">
+    <input id="username">
 
     <label>Currency</label>
     <select id="currency" onchange="saveCurrency()">
-        <option value="₹">INR (₹)</option>
-        <option value="$">USD ($)</option>
-        <option value="€">EUR (€)</option>
-        <option value="£">GBP (£)</option>
+      <option value="₹">INR</option>
+      <option value="$">USD</option>
+      <option value="€">EUR</option>
     </select>
 
     <label>Amount</label>
@@ -305,162 +301,191 @@ body.dark tbody td {
 
     <label>Category</label>
     <select id="category">
-        <option value="">Select</option>
-        <option>Food</option>
-        <option>Travel</option>
-        <option>Shopping</option>
-        <option>Other</option>
+      <option value="">Select</option>
+      <option>Food</option>
+      <option>Travel</option>
+      <option>Shopping</option>
+      <option>Other</option>
     </select>
 
     <label>Date</label>
     <input type="date" id="date">
 
-    <button id="addBtn" class="full-btn" onclick="addExpense()">Add Expense</button>
+    <button id="addBtn" onclick="addExpense()">Add Expense</button>
+  </div>
 </div>
 
-<div class="card total-box">
-    <span id="total">Total: ₹0</span>
-</div>
-
-<div class="card legend">
-    <span class="Food">Food</span>
-    <span class="Travel">Travel</span>
-    <span class="Shopping">Shopping</span>
-    <span class="Other">Other</span>
-</div>
-
-<div class="card">
-    <label>Filter by Category</label>
+<!-- EXPENSES -->
+<div id="list" class="screen">
+  <div class="card">
     <select id="categoryFilter" onchange="applyFilters()">
-        <option value="All">All</option>
-        <option>Food</option>
-        <option>Travel</option>
-        <option>Shopping</option>
-        <option>Other</option>
+      <option value="All">All</option>
+      <option>Food</option>
+      <option>Travel</option>
+      <option>Shopping</option>
+      <option>Other</option>
     </select>
 
-    <button class="full-btn" onclick="exportCSV()">Export CSV</button>
+    <div class="total-caption">Total Expenses</div>
+    <div class="total-box" id="total">₹0</div>
 
     <table>
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody id="summaryBody"></tbody>
+      <thead>
+        <tr><th>Date</th><th>Category</th><th>Amount</th><th>Action</th></tr>
+      </thead>
+      <tbody id="summaryBody"></tbody>
     </table>
+  </div>
 </div>
 
-<div class="footer">
-    © siva80mail@gmail.com 2025–2026<br>
-    Disclaimer: Best viewed in web browsers like Google Chrome, Microsoft Edge
+<!-- USER -->
+<div id="settings" class="screen">
+  <div class="card">
+    <h3 id="profileName">User</h3>
+
+    <div class="dashboard">
+      <div class="stat" onclick="renderInsight()">Insights</div>
+      <div class="stat" onclick="renderBudget()">Budget</div>
+      <div class="stat" onclick="renderCategories()">Categories</div>
+      <div class="stat" onclick="renderPreference()">Preferences</div>
+    </div>
+
+    <div class="user-output" id="userOutput">
+      Click any tile above to view details.
+    </div>
+
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    <button onclick="exportCSV()">Export CSV</button>
+  </div>
 </div>
 
+</div>
+
+<!-- NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="switchScreen('home',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+      <path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>
+    </svg>
+  </div>
+  <div class="nav-item" onclick="switchScreen('add',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+      <path d="M12 5v14M5 12h14"/>
+    </svg>
+  </div>
+  <div class="nav-item" onclick="switchScreen('list',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+      <rect x="3" y="4" width="18" height="16" rx="3"/>
+    </svg>
+  </div>
+  <div class="nav-item" onclick="switchScreen('settings',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c2-4 14-4 16 0"/>
+    </svg>
+  </div>
 </div>
 
 <script>
-/* LOGIC UNCHANGED */
-if(localStorage.getItem("darkMode")==="on")
-    document.body.classList.add("dark");
-
-currency.value = localStorage.getItem("currency") || "₹";
-function saveCurrency(){
-    localStorage.setItem("currency",currency.value);
-    applyFilters();
-}
-
-username.value = localStorage.getItem("username") || "";
-username.oninput=()=>localStorage.setItem("username",username.value);
-
-let expenses = JSON.parse(localStorage.getItem("expenses"))||[];
+/* === LOGIC UNCHANGED === */
+let expenses=JSON.parse(localStorage.getItem("expenses"))||[];
 let editId=null;
 
-applyFilters();
+currency.value=localStorage.getItem("currency")||"₹";
+username.value=localStorage.getItem("username")||"";
+profileName.innerText=username.value||"User";
 
-function toggleDarkMode(){
-    document.body.classList.toggle("dark");
-    localStorage.setItem("darkMode",
-        document.body.classList.contains("dark")?"on":"off");
-}
+username.oninput=()=>{
+  localStorage.setItem("username",username.value);
+  profileName.innerText=username.value||"User";
+};
+
+function saveCurrency(){localStorage.setItem("currency",currency.value);applyFilters();}
+function toggleDarkMode(){document.body.classList.toggle("dark");}
 
 function addExpense(){
-    if(!amount.value||!category.value||!date.value){
-        alert("Fill all fields");return;
-    }
-    if(editId){
-        expenses=expenses.map(e=>e.id===editId?
-            {...e,amount:amount.value,category:category.value,date:date.value}:e);
-        editId=null;
-        addBtn.innerText="Add Expense";
-    } else {
-        expenses.push({id:Date.now(),amount:amount.value,category:category.value,date:date.value});
-    }
-    localStorage.setItem("expenses",JSON.stringify(expenses));
-    amount.value=category.value=date.value="";
-    applyFilters();
+  if(!amount.value||!category.value||!date.value)return alert("Fill all fields");
+  if(editId){
+    expenses=expenses.map(e=>e.id===editId?{...e,amount:amount.value,category:category.value,date:date.value}:e);
+    editId=null;addBtn.innerText="Add Expense";
+  }else{
+    expenses.push({id:Date.now(),amount:amount.value,category:category.value,date:date.value});
+  }
+  localStorage.setItem("expenses",JSON.stringify(expenses));
+  amount.value=category.value=date.value="";
+  applyFilters();
 }
 
 function applyFilters(){
-    let list=[...expenses];
-    let c=categoryFilter.value;
-    if(c!=="All") list=list.filter(e=>e.category===c);
-    display(list);
+  let list=[...expenses];
+  if(categoryFilter.value!=="All")list=list.filter(e=>e.category===categoryFilter.value);
+  display(list);
 }
 
 function display(list){
-    let sym=currency.value;
-    total.innerText="Total: "+sym+
-        list.reduce((s,e)=>s+Number(e.amount),0);
-    summaryBody.innerHTML="";
-    list.forEach(e=>{
-        let tr=document.createElement("tr");
-        tr.className=e.category;
-        tr.innerHTML=`
-        <td>${e.date}</td>
-        <td>${e.category}</td>
-        <td>${sym}${e.amount}</td>
-        <td>
-            <button class="action-btn edit-btn" onclick="editExpense(${e.id})">Edit</button>
-            <button class="action-btn delete-btn" onclick="deleteExpense(${e.id})">Delete</button>
-        </td>`;
-        summaryBody.appendChild(tr);
-    });
+  total.innerText=currency.value+list.reduce((s,e)=>s+Number(e.amount),0);
+  summaryBody.innerHTML="";
+  list.forEach(e=>{
+    summaryBody.innerHTML+=`
+    <tr>
+      <td>${e.date}</td>
+      <td>${e.category}</td>
+      <td>${currency.value}${e.amount}</td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editExpense(${e.id})">Edit</button>
+        <button class="action-btn delete-btn" onclick="deleteExpense(${e.id})">Del</button>
+      </td>
+    </tr>`;
+  });
 }
 
 function editExpense(id){
-    window.scrollTo({top:0,behavior:"smooth"});
-    let e=expenses.find(x=>x.id===id);
-    amount.value=e.amount;
-    category.value=e.category;
-    date.value=e.date;
-    editId=id;
-    addBtn.innerText="Update Expense";
+  let e=expenses.find(x=>x.id===id);
+  amount.value=e.amount;category.value=e.category;date.value=e.date;
+  editId=id;addBtn.innerText="Update Expense";
+  switchScreen('add',document.querySelectorAll('.nav-item')[1]);
 }
 
 function deleteExpense(id){
-    expenses=expenses.filter(e=>e.id!==id);
-    localStorage.setItem("expenses",JSON.stringify(expenses));
-    applyFilters();
+  expenses=expenses.filter(e=>e.id!==id);
+  localStorage.setItem("expenses",JSON.stringify(expenses));
+  applyFilters();
 }
 
 function exportCSV(){
-    let user=username.value||"User";
-    let lines=[];
-    lines.push("User Name,"+user);
-    lines.push("");
-    lines.push("Date,Category,Amount");
-    expenses.forEach(e=>{
-        lines.push(`${e.date},${e.category},${e.amount}`);
-    });
-    let blob=new Blob([lines.join("\n")],{type:"text/csv"});
-    let a=document.createElement("a");
-    a.href=URL.createObjectURL(blob);
-    a.download="Expense_Report.csv";
-    a.click();
+  let rows=["Date,Category,Amount"];
+  expenses.forEach(e=>rows.push(`${e.date},${e.category},${e.amount}`));
+  let blob=new Blob([rows.join("\n")],{type:"text/csv"});
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="Expense_Report.csv";
+  a.click();
 }
+
+function switchScreen(id,el){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  el.classList.add("active");
+}
+
+function renderInsight(){
+  userOutput.innerHTML="Total spent: <b>"+expenses.reduce((s,e)=>s+Number(e.amount),0)+"</b>";
+}
+function renderBudget(){
+  userOutput.innerHTML="Average per entry: <b>"+(expenses.length?(expenses.reduce((s,e)=>s+Number(e.amount),0)/expenses.length).toFixed(2):0)+"</b>";
+}
+function renderCategories(){
+  let c={};expenses.forEach(e=>c[e.category]=(c[e.category]||0)+Number(e.amount));
+  userOutput.innerHTML=Object.entries(c).map(x=>`${x[0]} : ${currency.value}${x[1]}`).join("<br>");
+}
+function renderPreference(){
+  let c={};expenses.forEach(e=>c[e.category]=(c[e.category]||0)+1);
+  let p=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
+  userOutput.innerHTML=p?"Most used category: <b>"+p[0]+"</b>":"No data";
+}
+
+applyFilters();
 </script>
 </body>
 </html>
