@@ -50,4 +50,8 @@ Contributions, issues, and feature requests are welcome.
 Feel free to fork the repo and submit a pull request.
 
 License
-© 2025–2026 Sivakumar · siva80mail@gmail.com · All rights reserved · Disclaimer applies
+© 2025–2026 Sivakumar · siva80mail@gmail.com  
+All rights reserved · Disclaimer applies  
+
+See the LICENSE file for full terms.
+
