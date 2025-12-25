@@ -45,9 +45,14 @@ Project Status
 Actively developed  
 Open to enhancements and feedback
 
-Contributing
-Contributions, issues, and feature requests are welcome.  
-Feel free to fork the repo and submit a pull request.
+Usage & Contributions
+
+This repository is provided for reference purposes only.
+
+Modification, redistribution, or reuse of this code, in whole or in part,
+is strictly prohibited .
+All rights are reserved as specified in the LICENSE file/ © 2025–2026 Sivakumar · siva80mail@gmail.com  
+
 
 License
 © 2025–2026 Sivakumar · siva80mail@gmail.com  
