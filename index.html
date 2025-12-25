@@ -8,31 +8,35 @@
 <style>
 /* ================= THEME ================= */
 :root{
-  --bg1:#fbf7f2;
-  --bg2:#ffffff;
-  --card:#e9f7f1;
+  --bg1:#dff9f3; /* background gradient start */
+  --bg2:#e6fff9; /* background gradient end */
+  --card:#a0e7e5; /* card background */
   --text:#1a1a1a;
-  --nav:#f0f2f1;
-  --icon:#6b7280;
-  --icon-active:#000;
-  --header:#dff1ea;
+  --nav:#a0e7e5; /* same as card */
+  --icon:#006666; /* contrasting icon color for menu */
+  --icon-active:#004d4d;
+  --header:#c2f0ed;
   --shadow-soft:0 12px 28px rgba(0,0,0,.14);
   --shadow-emboss:inset 4px 4px 8px rgba(0,0,0,.08),
                    inset -4px -4px 8px rgba(255,255,255,.9);
+  --btn-edit:#28a745;
+  --btn-delete:#dc3545;
 }
 
 body.dark{
-  --bg1:#0b0d10;
-  --bg2:#0f1216;
-  --card:#1a1f26;
-  --text:#f3f4f6;
-  --nav:#1e232b;
-  --icon:#ffffff;
-  --icon-active:#ffffff;
-  --header:#232a33;
-  --shadow-soft:0 20px 48px rgba(0,0,0,.75);
+  --bg1:#121214; 
+  --bg2:#1c1c1e; 
+  --card:#2c2c2e; 
+  --text:#f5f5f5; 
+  --nav:#2c2c2e; /* same as card for fluid look */
+  --icon:#00ffff; /* bright cyan for contrast with nav */
+  --icon-active:#00ffff; 
+  --header:#3a3a3c; 
+  --shadow-soft:0 20px 48px rgba(0,0,0,.85);
   --shadow-emboss:inset 4px 4px 10px rgba(0,0,0,.8),
-                   inset -4px -4px 10px rgba(255,255,255,.05);
+                   inset -4px -4px 10px rgba(255,255,255,.1);
+  --btn-edit:#28a745;
+  --btn-delete:#dc3545;
 }
 
 *{box-sizing:border-box}
@@ -117,7 +121,7 @@ button{
   transition:.25s;
   color:var(--text);
 }
-body.dark button{color:#ffffff}
+body.dark button{color:#f5f5f5}
 button:hover{transform:translateY(-2px)}
 
 /* ================= TABLE ================= */
@@ -130,7 +134,7 @@ table{
   border-collapse:separate;
 }
 thead th{
-  background:rgba(0,0,0,.12);
+  background:rgba(255,255,255,.08);
   padding:12px;
   border-radius:14px;
 }
@@ -141,6 +145,23 @@ tbody tr{
 }
 tbody td{text-align:center;padding:12px}
 
+/* ================= FILTER DROPDOWN ================= */
+#categoryFilter{
+  border-radius:999px;
+  padding:12px 16px;
+  background:var(--header);
+  color:var(--text);
+  border:none;
+  margin-bottom:16px;
+  cursor:pointer;
+}
+#categoryFilter option{
+  border-radius:4px;
+  background:#fff;
+  color:#000;
+  padding:6px;
+}
+
 /* ================= ACTION BUTTONS ================= */
 .action-btn{
   padding:6px 16px;
@@ -149,9 +170,11 @@ tbody td{text-align:center;padding:12px}
   font-weight:600;
   border:none;
   box-shadow:var(--shadow-emboss);
+  color:#fff;
 }
-.edit-btn{background:#bbf7d0}
-.delete-btn{background:#fecaca}
+.edit-btn{background:var(--btn-edit)}
+.delete-btn{background:var(--btn-delete)}
+body.dark .edit-btn, body.dark .delete-btn{color:#ffffff;font-weight:700;}
 
 /* ================= USER DASHBOARD ================= */
 .dashboard{
@@ -174,8 +197,9 @@ tbody td{text-align:center;padding:12px}
   margin-top:16px;
   padding:14px;
   border-radius:18px;
-  background:rgba(0,0,0,.05);
+  background:rgba(255,255,255,.05);
   font-size:14px;
+  color:var(--text);
 }
 
 /* ================= NAV BAR ================= */
@@ -218,7 +242,7 @@ tbody td{text-align:center;padding:12px}
   width:52px;
   height:52px;
   border-radius:50%;
-  background:var(--bg1);
+  background:var(--card); /* contrast circle for nav */
   top:50%;
   left:50%;
   transform:translate(-50%,-50%) scale(0);
@@ -263,7 +287,7 @@ tbody td{text-align:center;padding:12px}
       </div>
       <div>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-          <rect x="3" y="4" width="18" height="16" rx="3"/>
+          <path d="M4 4h16v16H4z"/><path d="M4 10h16"/><path d="M10 4v16"/>
         </svg>
         Expenses — Review, edit and analyze
       </div>
@@ -276,7 +300,6 @@ tbody td{text-align:center;padding:12px}
       </div>
     </div>
 
-    <!-- DISCLAIMER ONLY IN HOME -->
     <div class="home-disclaimer">
       © 2025–2026 Sivakumar · siva80mail@gmail.com · All rights reserved · Disclaimer applies
     </div>
@@ -375,7 +398,7 @@ tbody td{text-align:center;padding:12px}
   </div>
   <div class="nav-item" onclick="switchScreen('list',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-      <rect x="3" y="4" width="18" height="16" rx="3"/>
+      <path d="M4 4h16v16H4z"/><path d="M4 10h16"/><path d="M10 4v16"/>
     </svg>
   </div>
   <div class="nav-item" onclick="switchScreen('settings',this)">
@@ -388,102 +411,31 @@ tbody td{text-align:center;padding:12px}
 
 <script>
 /* === LOGIC UNCHANGED === */
-let expenses=JSON.parse(localStorage.getItem("expenses"))||[];
-let editId=null;
+let expenses=JSON.parse(localStorage.getItem("expenses"))||[];let editId=null;
 
 currency.value=localStorage.getItem("currency")||"₹";
 username.value=localStorage.getItem("username")||"";
 profileName.innerText=username.value||"User";
 
-username.oninput=()=>{
-  localStorage.setItem("username",username.value);
-  profileName.innerText=username.value||"User";
-};
+username.oninput=()=>{localStorage.setItem("username",username.value);profileName.innerText=username.value||"User";};
 
 function saveCurrency(){localStorage.setItem("currency",currency.value);applyFilters();}
 function toggleDarkMode(){document.body.classList.toggle("dark");}
 
-function addExpense(){
-  if(!amount.value||!category.value||!date.value)return alert("Fill all fields");
-  if(editId){
-    expenses=expenses.map(e=>e.id===editId?{...e,amount:amount.value,category:category.value,date:date.value}:e);
-    editId=null;addBtn.innerText="Add Expense";
-  }else{
-    expenses.push({id:Date.now(),amount:amount.value,category:category.value,date:date.value});
-  }
-  localStorage.setItem("expenses",JSON.stringify(expenses));
-  amount.value=category.value=date.value="";
-  applyFilters();
-}
+function addExpense(){if(!amount.value||!category.value||!date.value)return alert("Fill all fields");if(editId){expenses=expenses.map(e=>e.id===editId?{...e,amount:amount.value,category:category.value,date:date.value}:e);editId=null;addBtn.innerText="Add Expense";}else{expenses.push({id:Date.now(),amount:amount.value,category:category.value,date:date.value});}localStorage.setItem("expenses",JSON.stringify(expenses));amount.value=category.value=date.value="";applyFilters();}
 
-function applyFilters(){
-  let list=[...expenses];
-  if(categoryFilter.value!=="All")list=list.filter(e=>e.category===categoryFilter.value);
-  display(list);
-}
+function applyFilters(){let list=[...expenses];if(categoryFilter.value!=="All")list=list.filter(e=>e.category===categoryFilter.value);display(list);}
+function display(list){total.innerText=currency.value+list.reduce((s,e)=>s+Number(e.amount),0);summaryBody.innerHTML="";list.forEach(e=>{summaryBody.innerHTML+=`<tr><td>${e.date}</td><td>${e.category}</td><td>${currency.value}${e.amount}</td><td><button class="action-btn edit-btn" onclick="editExpense(${e.id})">Edit</button><button class="action-btn delete-btn" onclick="deleteExpense(${e.id})">Del</button></td></tr>`;});}
 
-function display(list){
-  total.innerText=currency.value+list.reduce((s,e)=>s+Number(e.amount),0);
-  summaryBody.innerHTML="";
-  list.forEach(e=>{
-    summaryBody.innerHTML+=`
-    <tr>
-      <td>${e.date}</td>
-      <td>${e.category}</td>
-      <td>${currency.value}${e.amount}</td>
-      <td>
-        <button class="action-btn edit-btn" onclick="editExpense(${e.id})">Edit</button>
-        <button class="action-btn delete-btn" onclick="deleteExpense(${e.id})">Del</button>
-      </td>
-    </tr>`;
-  });
-}
+function editExpense(id){let e=expenses.find(x=>x.id===id);amount.value=e.amount;category.value=e.category;date.value=e.date;editId=id;addBtn.innerText="Update Expense";switchScreen('add',document.querySelectorAll('.nav-item')[1]);}
+function deleteExpense(id){expenses=expenses.filter(e=>e.id!==id);localStorage.setItem("expenses",JSON.stringify(expenses));applyFilters();}
+function exportCSV(){let rows=["Date,Category,Amount"];expenses.forEach(e=>rows.push(`${e.date},${e.category},${e.amount}`));let blob=new Blob([rows.join("\n")],{type:"text/csv"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="Expense_Report.csv";a.click();}
+function switchScreen(id,el){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));el.classList.add("active");}
 
-function editExpense(id){
-  let e=expenses.find(x=>x.id===id);
-  amount.value=e.amount;category.value=e.category;date.value=e.date;
-  editId=id;addBtn.innerText="Update Expense";
-  switchScreen('add',document.querySelectorAll('.nav-item')[1]);
-}
-
-function deleteExpense(id){
-  expenses=expenses.filter(e=>e.id!==id);
-  localStorage.setItem("expenses",JSON.stringify(expenses));
-  applyFilters();
-}
-
-function exportCSV(){
-  let rows=["Date,Category,Amount"];
-  expenses.forEach(e=>rows.push(`${e.date},${e.category},${e.amount}`));
-  let blob=new Blob([rows.join("\n")],{type:"text/csv"});
-  let a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="Expense_Report.csv";
-  a.click();
-}
-
-function switchScreen(id,el){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
-  el.classList.add("active");
-}
-
-function renderInsight(){
-  userOutput.innerHTML="Total spent: <b>"+expenses.reduce((s,e)=>s+Number(e.amount),0)+"</b>";
-}
-function renderBudget(){
-  userOutput.innerHTML="Average per entry: <b>"+(expenses.length?(expenses.reduce((s,e)=>s+Number(e.amount),0)/expenses.length).toFixed(2):0)+"</b>";
-}
-function renderCategories(){
-  let c={};expenses.forEach(e=>c[e.category]=(c[e.category]||0)+Number(e.amount));
-  userOutput.innerHTML=Object.entries(c).map(x=>`${x[0]} : ${currency.value}${x[1]}`).join("<br>");
-}
-function renderPreference(){
-  let c={};expenses.forEach(e=>c[e.category]=(c[e.category]||0)+1);
-  let p=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
-  userOutput.innerHTML=p?"Most used category: <b>"+p[0]+"</b>":"No data";
-}
+function renderInsight(){userOutput.innerHTML="Total spent: <b>"+expenses.reduce((s,e)=>s+Number(e.amount),0)+"</b>";}
+function renderBudget(){userOutput.innerHTML="Average per entry: <b>"+(expenses.length?(expenses.reduce((s,e)=>s+Number(e.amount),0)/expenses.length).toFixed(2):0)+"</b>";}
+function renderCategories(){let c={};expenses.forEach(e=>c[e.category]=(c[e.category]||0)+Number(e.amount));userOutput.innerHTML=Object.entries(c).map(x=>`${x[0]} : ${currency.value}${x[1]}`).join("<br>");}
+function renderPreference(){let c={};expenses.forEach(e=>c[e.category]=(c[e.category]||0)+1);let p=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];userOutput.innerHTML=p?"Most used category: <b>"+p[0]+"</b>":"No data";}
 
 applyFilters();
 </script>
